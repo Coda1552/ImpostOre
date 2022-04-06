@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ForgeHooksClient;
 
 import java.util.Random;
 
@@ -43,11 +44,11 @@ public class ImpostOreRenderer extends EntityRenderer<ImpostOreEntity> {
                 BlockRenderDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
                 for (RenderType type : RenderType.chunkBufferLayers()) {
                     if (ItemBlockRenderTypes.canRenderInLayer(blockstate, type)) {
-                        net.minecraftforge.client.ForgeHooksClient.setRenderLayer(type);
+                        ForgeHooksClient.setRenderType(type);
                         blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, p_225623_4_, p_225623_5_.getBuffer(type), false, new Random(), blockstate.getSeed(p_225623_1_.getStartPos()), OverlayTexture.NO_OVERLAY);
                     }
                 }
-                net.minecraftforge.client.ForgeHooksClient.setRenderLayer(null);
+                ForgeHooksClient.setRenderType(null);
                 p_225623_4_.popPose();
                 super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
             }

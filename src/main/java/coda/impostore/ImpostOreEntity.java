@@ -54,14 +54,14 @@ public class ImpostOreEntity extends Monster {
     protected void dropCustomDeathLoot(DamageSource p_213333_1_, int p_213333_2_, boolean p_213333_3_) {
         super.dropCustomDeathLoot(p_213333_1_, p_213333_2_, p_213333_3_);
         Entity attacker = p_213333_1_.getEntity();
-        if (attacker instanceof LivingEntity) {
-            if (((LivingEntity) attacker).getMainHandItem().getItem().isCorrectToolForDrops(((LivingEntity) attacker).getMainHandItem(), getBlockState())) {
-                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) attacker).getMainHandItem()))) {
+        if (attacker instanceof Player player) {
+            if (player.getMainHandItem().getItem().isCorrectToolForDrops(player.getMainHandItem(), getBlockState()) && getBlockState().canHarvestBlock(level, getStartPos(), player)) {
+                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) player).getMainHandItem()))) {
                     spawnAtLocation(drop);
                 }
             }
             else {
-                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) attacker).getMainHandItem()))) {
+                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) player).getMainHandItem()))) {
                     spawnAtLocation(drop);
                 }
             }
