@@ -56,12 +56,7 @@ public class ImpostOreEntity extends Monster {
         Entity attacker = p_213333_1_.getEntity();
         if (attacker instanceof Player player) {
             if (player.getMainHandItem().getItem().isCorrectToolForDrops(player.getMainHandItem(), getBlockState()) && getBlockState().canHarvestBlock(level, getStartPos(), player)) {
-                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) player).getMainHandItem()))) {
-                    spawnAtLocation(drop);
-                }
-            }
-            else {
-                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, ((LivingEntity) player).getMainHandItem()))) {
+                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, player.getMainHandItem()))) {
                     spawnAtLocation(drop);
                 }
             }
