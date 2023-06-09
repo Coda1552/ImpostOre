@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 
 public class ImpostOreEntity extends Monster {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(ImpostOreEntity.class, EntityDataSerializers.BLOCK_POS);
@@ -59,6 +61,11 @@ public class ImpostOreEntity extends Monster {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean fireImmune() {
+        return getBlockState().is(Tags.Blocks.ORES_IN_GROUND_NETHERRACK);
     }
 
     public void addAdditionalSaveData(CompoundTag p_213281_1_) {
