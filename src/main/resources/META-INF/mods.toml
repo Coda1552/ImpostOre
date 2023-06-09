@@ -1,11 +1,11 @@
 modLoader="javafml" #mandatory
-loaderVersion="[37,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
-license="All rights reserved"
+loaderVersion="[45,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+license="LPGLv3"
 [[mods]] #mandatory
 modId="impostore" #mandatory
 version="${file.jarVersion}" #mandatory
 displayName="ImpostOre" #mandatory
 credits="Ashh, RonaRage" #optional
-authors="Coda1552" #optional
+authors="codyy" #optional
 description='''
 Ores have a configurable chance to come alive when broken and attack the player!'''

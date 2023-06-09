@@ -1,6 +1,7 @@
 package coda.impostore;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtUtils;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,7 +32,7 @@ import java.util.Optional;
 
 public class ImpostOreEntity extends Monster {
     protected static final EntityDataAccessor<BlockPos> DATA_START_POS = SynchedEntityData.defineId(ImpostOreEntity.class, EntityDataSerializers.BLOCK_POS);
-    protected static final EntityDataAccessor<Optional<BlockState>> DATA_BLOCKSTATE = SynchedEntityData.defineId(ImpostOreEntity.class, EntityDataSerializers.BLOCK_STATE);
+    protected static final EntityDataAccessor<BlockState> DATA_BLOCKSTATE = SynchedEntityData.defineId(ImpostOreEntity.class, EntityDataSerializers.BLOCK_STATE);
 
     public ImpostOreEntity(EntityType<? extends Monster> p_i48553_1_, Level p_i48553_2_) {
         super(p_i48553_1_, p_i48553_2_);
@@ -68,15 +69,15 @@ public class ImpostOreEntity extends Monster {
     }
 
     public void readAdditionalSaveData(CompoundTag p_70037_1_) {
-        setBlockState(NbtUtils.readBlockState(p_70037_1_.getCompound("BlockState")));
+        setBlockState(NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), p_70037_1_.getCompound("BlockState")));
     }
 
     public BlockState getBlockState() {
-        return this.entityData.get(DATA_BLOCKSTATE).orElse(Blocks.STONE.defaultBlockState());
+        return this.entityData.get(DATA_BLOCKSTATE);
     }
 
     public void setBlockState(BlockState state) {
-        this.entityData.set(DATA_BLOCKSTATE, Optional.of(state));
+        this.entityData.set(DATA_BLOCKSTATE, state);
     }
 
     public Level getLevel() {
@@ -94,6 +95,6 @@ public class ImpostOreEntity extends Monster {
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(DATA_START_POS, BlockPos.ZERO);
-        this.entityData.define(DATA_BLOCKSTATE, Optional.empty());
+        this.entityData.define(DATA_BLOCKSTATE, Blocks.STONE.defaultBlockState());
     }
 }

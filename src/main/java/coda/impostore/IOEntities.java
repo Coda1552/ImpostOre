@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class IOEntities {
-    public static final DeferredRegister<EntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.ENTITIES, ImpostOre.MOD_ID);
+    public static final DeferredRegister<EntityType<?>> REGISTER = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ImpostOre.MOD_ID);
 
     public static final RegistryObject<EntityType<ImpostOreEntity>> IMPOST_ORE = create("impost_ore", EntityType.Builder.<ImpostOreEntity>of(ImpostOreEntity::new, MobCategory.MONSTER).sized(1.0f, 1.0f));
 

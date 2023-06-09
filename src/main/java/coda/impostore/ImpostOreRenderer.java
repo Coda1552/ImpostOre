@@ -1,6 +1,7 @@
 package coda.impostore;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.client.ForgeRenderTypes;
 
 import java.util.Random;
 
@@ -36,10 +38,10 @@ public class ImpostOreRenderer extends EntityRenderer<ImpostOreEntity> {
         float f = Mth.rotLerp(p_225623_3_, p_225623_1_.yBodyRotO, p_225623_1_.yBodyRot);
         if (blockstate.getRenderShape() == RenderShape.MODEL) {
             Level world = p_225623_1_.getLevel();
-            p_225623_4_.mulPose(Vector3f.YP.rotationDegrees(180.0F - f));
+            p_225623_4_.mulPose(Axis.YP.rotationDegrees(180.0F - f));
             if (blockstate != world.getBlockState(p_225623_1_.blockPosition()) && blockstate.getRenderShape() != RenderShape.INVISIBLE) {
                 p_225623_4_.pushPose();
-                BlockPos blockpos = new BlockPos(p_225623_1_.getX(), p_225623_1_.getBoundingBox().maxY, p_225623_1_.getZ());
+                BlockPos blockpos = new BlockPos((int)p_225623_1_.getX(), (int)p_225623_1_.getBoundingBox().maxY, (int)p_225623_1_.getZ());
                 p_225623_4_.translate(-0.5D, 0.0D, -0.5D);
                 BlockRenderDispatcher blockrendererdispatcher = Minecraft.getInstance().getBlockRenderer();
                 for (RenderType type : RenderType.chunkBufferLayers()) {
@@ -48,7 +50,7 @@ public class ImpostOreRenderer extends EntityRenderer<ImpostOreEntity> {
                         blockrendererdispatcher.getModelRenderer().tesselateBlock(world, blockrendererdispatcher.getBlockModel(blockstate), blockstate, blockpos, p_225623_4_, p_225623_5_.getBuffer(type), false, new Random(), blockstate.getSeed(p_225623_1_.getStartPos()), OverlayTexture.NO_OVERLAY);
                     }
                 }
-                ForgeHooksClient.setRenderType(null);
+                ForgeRenderTypes.getEntityRenderType(null);
                 p_225623_4_.popPose();
                 super.render(p_225623_1_, p_225623_2_, p_225623_3_, p_225623_4_, p_225623_5_, p_225623_6_);
             }
