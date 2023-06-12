@@ -25,6 +25,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
@@ -55,8 +56,8 @@ public class ImpostOreEntity extends Monster {
         super.dropCustomDeathLoot(p_213333_1_, p_213333_2_, p_213333_3_);
         Entity attacker = p_213333_1_.getEntity();
         if (attacker instanceof Player player) {
-            if (player.getMainHandItem().getItem().isCorrectToolForDrops(player.getMainHandItem(), getBlockState()) && getBlockState().canHarvestBlock(level, getStartPos(), player)) {
-                for (ItemStack drop : getBlockState().getDrops(new LootContext.Builder((ServerLevel) level).withRandom(random).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, player.getMainHandItem()))) {
+            if (player.getMainHandItem().getItem().isCorrectToolForDrops(player.getMainHandItem(), getBlockState()) && getBlockState().canHarvestBlock(level(), getStartPos(), player)) {
+                for (ItemStack drop : getBlockState().getDrops(new LootParams.Builder((ServerLevel) level()).withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(getOnPos())).withParameter(LootContextParams.TOOL, player.getMainHandItem()))) {
                     spawnAtLocation(drop);
                 }
             }
@@ -73,7 +74,7 @@ public class ImpostOreEntity extends Monster {
     }
 
     public void readAdditionalSaveData(CompoundTag p_70037_1_) {
-        setBlockState(NbtUtils.readBlockState(this.level.holderLookup(Registries.BLOCK), p_70037_1_.getCompound("BlockState")));
+        setBlockState(NbtUtils.readBlockState(this.level().holderLookup(Registries.BLOCK), p_70037_1_.getCompound("BlockState")));
     }
 
     public BlockState getBlockState() {
@@ -85,7 +86,7 @@ public class ImpostOreEntity extends Monster {
     }
 
     public Level getLevel() {
-        return this.level;
+        return this.level();
     }
 
     public void setStartPos(BlockPos p_184530_1_) {
